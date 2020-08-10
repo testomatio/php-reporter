@@ -28,7 +28,7 @@ class Codeception extends \Codeception\Extension
         if (!$this->url) {
             $this->url = 'https://app.testomat.io';
         }
-        $this->apiKey = getenv('TESTOMATIO');
+        $this->apiKey = trim(getenv('TESTOMATIO'));
         if (!$this->apiKey) return;
 
         if (self::$runId) {
