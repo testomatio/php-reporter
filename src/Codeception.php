@@ -113,7 +113,7 @@ class Codeception extends \Codeception\Extension
                     'api_key' => $this->apiKey,
                     'status' => $status,
                     'message' => $message,
-                    'run_time' => $runTime,
+                    'run_time' => $runTime * 1000,
                     'title' => trim($testTitle),
                     'suite' => trim($suite),
                     'test_id' => $testId,
