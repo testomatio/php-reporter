@@ -13,7 +13,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Testomatio\\Reporter": "src/"
+            "Testomatio\\Reporter\\": "src/"
         }
     }
 }
