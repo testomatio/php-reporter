@@ -98,11 +98,17 @@ class Codeception extends \Codeception\Extension
      * Used to add a new test to Run instance
      *
      */
-    public function addTestRun(\Codeception\TestInterface $test, $status, $message, $runTime)
+    public function addTestRun($test, $status, $message, $runTime)
     {
-        if (!$this->apiKey) return;
+        if (!$this->apiKey) {
+            return;
+        }
 
-        $testId = $this->getTestId($test->getMetadata()->getGroups());
+        $testId = null;
+        if ($test instanceof \Codeception\TestInterface) {
+            $testId = $this->getTestId($test->getMetadata()->getGroups());
+        }
+
         list($suite, $testTitle) = explode(':', Descriptor::getTestAsString($test));
 
         $runId = self::$runId;
