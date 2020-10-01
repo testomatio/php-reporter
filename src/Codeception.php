@@ -111,6 +111,8 @@ class Codeception extends \Codeception\Extension
 
         list($suite, $testTitle) = explode(':', Descriptor::getTestAsString($test));
 
+        $testTitle = preg_replace('/^Test\s/', '', trim($testTitle)); // remove "test" prefix
+
         $runId = self::$runId;
         try {
             $url = $this->url . "/api/reporter/$runId/testrun";
@@ -121,12 +123,15 @@ class Codeception extends \Codeception\Extension
                     'message' => $message,
                     'run_time' => $runTime * 1000,
                     'title' => trim($testTitle),
-                    'suite' => trim($suite),
+                    'suite_title' => trim($suite),
                     'test_id' => $testId,
                 ])
                 ->sendsJson()
                 ->expectsJson()
                 ->send();
+            if (isset($response->body->message)) {
+                codecept_debug("Testomatio: " . $response->body->message);
+            }
         } catch (\Exception $e) {
             $this->writeln("[Testomatio] Test $testId-$testTitle was not found in Testomat.io, skipping...");
         }
