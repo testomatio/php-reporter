@@ -10,7 +10,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "nategood/httpful": "~0.2"
+    },
     "autoload": {
         "psr-4": {
             "Testomatio\\Reporter\\": "src/"
