@@ -24,6 +24,7 @@ class Codeception extends \Codeception\Extension
 
     public function _initialize()
     {
+        error_reporting(E_ALL & ~E_DEPRECATED); // http library incompatible
         $this->url = trim(getenv('TESTOMATIO_URL'));
         if (!$this->url) {
             $this->url = 'https://app.testomat.io';
