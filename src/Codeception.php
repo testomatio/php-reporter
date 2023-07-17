@@ -79,9 +79,28 @@ class Codeception extends \Codeception\Extension
             return;
         }
 
+        $params = [];
+
+        if (getenv('TESTOMATIO_RUNGROUP_TITLE')) {
+            $params['group_title'] = trim(getenv('TESTOMATIO_RUNGROUP_TITLE'));
+        }
+
+        if (getenv('TESTOMATIO_ENV')) {
+            $params['env'] = trim(getenv('TESTOMATIO_ENV'));
+        }
+
+        if (getenv('TESTOMATIO_TITLE')) {
+            $params['title'] = trim(getenv('TESTOMATIO_TITLE'));
+        }
+
+        if (getenv('TESTOMATIO_SHARED_RUN')) {
+            $params['shared_run'] = trim(getenv('TESTOMATIO_SHARED_RUN'));
+        }        
+
         try {
             $url = $this->url . '/api/reporter?api_key=' . $this->apiKey;
             $response = \Httpful\Request::post($url)
+                ->body($params)
                 ->sendsJson()
                 ->expectsJson()
                 ->send();
@@ -155,7 +174,7 @@ class Codeception extends \Codeception\Extension
             $response = \Httpful\Request::put($url)
                 ->body([
                     'api_key' => $this->apiKey,
-                    'status' => $this->hasFailed ? 'failed' : 'passed',
+                    'status_event' => $this->hasFailed ? 'fail' : 'pass',
                 ])
                 ->sendsJson()
                 ->expectsJson()
