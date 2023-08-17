@@ -59,12 +59,18 @@ class PHPUnit implements TestListener
 
     public function startTest(Test $test): void
     {
-        // Code to execute before each individual test starts
     }
 
     public function startTestSuite(TestSuite $suite): void
     {
-        $this->suiteName = $this->humanize($suite->getName());
+        $this->suiteName = null;
+        $pattern = '/\\\\([^\\\\]+)Test::/';
+        preg_match($pattern, $suite->getName(), $matches);
+
+        if (isset($matches[1])) {
+            $result = $matches[1];
+            $this->suiteName = $result;
+        }
     }
 
     public function endTest(Test $test, float $time): void
