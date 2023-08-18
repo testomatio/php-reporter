@@ -133,19 +133,25 @@ class Codeception extends \Codeception\Extension
 
         $testTitle = preg_replace('/^Test\s/', '', trim($testTitle)); // remove "test" prefix
 
+        $body = [
+            'api_key' => $this->apiKey,
+            'status' => $status,
+            'message' => $message,
+            'run_time' => $runTime * 1000,
+            'title' => trim($testTitle),
+            'suite_title' => trim($suite),
+            'test_id' => $testId,
+        ];
+
+        if (trim(getenv('TESTOMATIO_CREATE'))) {
+            $body['create'] = true;
+        }
+
         $runId = self::$runId;
         try {
             $url = $this->url . "/api/reporter/$runId/testrun";
             $response = \Httpful\Request::post($url)
-                ->body([
-                    'api_key' => $this->apiKey,
-                    'status' => $status,
-                    'message' => $message,
-                    'run_time' => $runTime * 1000,
-                    'title' => trim($testTitle),
-                    'suite_title' => trim($suite),
-                    'test_id' => $testId,
-                ])
+                ->body($body)
                 ->sendsJson()
                 ->expectsJson()
                 ->send();

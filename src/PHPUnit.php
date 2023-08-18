@@ -177,6 +177,11 @@ class PHPUnit implements TestListener
             'suite_title' => trim($this->suiteName),
         ];
 
+
+        if (trim(getenv('TESTOMATIO_CREATE'))) {
+            $body['create'] = true;
+        }
+
         if ($trace) {
             $body['stack'] = $trace;
         }
