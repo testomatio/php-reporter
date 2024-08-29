@@ -95,15 +95,18 @@ class Codeception extends \Codeception\Extension
 
         if (getenv('TESTOMATIO_SHARED_RUN')) {
             $params['shared_run'] = trim(getenv('TESTOMATIO_SHARED_RUN'));
-        }        
+        }
 
         try {
             $url = $this->url . '/api/reporter?api_key=' . $this->apiKey;
-            $response = \Httpful\Request::post($url)
-                ->body($params)
+            $request = \Httpful\Request::post($url)
                 ->sendsJson()
-                ->expectsJson()
-                ->send();
+                ->expectsJson();
+
+            if (!empty($params)) {
+                $request = $request->body($params);
+            }
+            $response = $request->send();
         } catch (\Exception $e) {
             $this->writeln("Couldn't start run at Testomatio: " . $e->getMessage());
             exit(1);
@@ -162,7 +165,7 @@ class Codeception extends \Codeception\Extension
             $this->writeln("[Testomatio] Test $testId-$testTitle was not found in Testomat.io, skipping...");
         }
     }
-  
+
     /**
      * Update run status
      *
