@@ -22,7 +22,7 @@ class Codeception extends \Codeception\Extension
     private $apiKey;
     private $hasFailed = false;
 
-    public function _initialize()
+    public function _initialize(): void
     {
         error_reporting(E_ALL & ~E_DEPRECATED); // http library incompatible
         $this->url = trim(getenv('TESTOMATIO_URL'));
