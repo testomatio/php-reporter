@@ -8,6 +8,9 @@ composer require testomatio/reporter --dev
 
 ### Codeception
 
+> NOTE
+> For Codeception 4.x install `testomatio/php-reporter` version 0.4**
+
 Get API key from Testomatio application and set it as `TESTOMATIO` environment variable.
 Run your tests with`Testomatio\Reporter\Codeception` extension enabled: 
 
