@@ -9,7 +9,7 @@ use Codeception\Test\Descriptor;
 class Codeception extends \Codeception\Extension
 {
     // we are listening for events
-    public static $events = [
+    public static array $events = [
         \Codeception\Events::TEST_SUCCESS => 'passed',
         \Codeception\Events::TEST_FAIL    => 'failed',
         \Codeception\Events::TEST_ERROR   => 'failed',
@@ -17,10 +17,10 @@ class Codeception extends \Codeception\Extension
         \Codeception\Events::RESULT_PRINT_AFTER => 'updateStatus'
     ];
 
-    private static $runId;
-    private $url;
-    private $apiKey;
-    private $hasFailed = false;
+    private static string $runId;
+    private string $url;
+    private string $apiKey;
+    private bool $hasFailed = false;
 
     public function _initialize(): void
     {
@@ -171,7 +171,7 @@ class Codeception extends \Codeception\Extension
      *
      * @returns {Promise}
      */
-    public function updateStatus()
+    public function updateStatus(): void
     {
         if (!$this->apiKey) return;
         if (!self::$runId) {
