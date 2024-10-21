@@ -22,7 +22,7 @@ class Codeception extends \Codeception\Extension
     private $apiKey;
     private $hasFailed = false;
 
-    public function _initialize()
+    public function _initialize(): void
     {
         error_reporting(E_ALL & ~E_DEPRECATED); // http library incompatible
         $this->url = trim(getenv('TESTOMATIO_URL'));
@@ -38,7 +38,7 @@ class Codeception extends \Codeception\Extension
         $this->createRun();
     }
 
-    public function passed(TestEvent $event)
+    public function passed(TestEvent $event): void
     {
         $this->addTestRun(
             $event->getTest(),
@@ -49,7 +49,7 @@ class Codeception extends \Codeception\Extension
     }
 
 
-    public function skipped(FailEvent $event)
+    public function skipped(FailEvent $event): void
     {
         $this->addTestRun(
             $event->getTest(),
@@ -59,7 +59,7 @@ class Codeception extends \Codeception\Extension
         );
     }
 
-    public function failed(FailEvent $event)
+    public function failed(FailEvent $event): void
     {
         $this->hasFailed = true;
 
@@ -71,7 +71,7 @@ class Codeception extends \Codeception\Extension
         );
     }
 
-    protected function createRun()
+    protected function createRun(): void
     {
         $runId = getenv('runId');
         if ($runId) {
@@ -121,7 +121,7 @@ class Codeception extends \Codeception\Extension
      * Used to add a new test to Run instance
      *
      */
-    public function addTestRun($test, $status, $message, $runTime)
+    public function addTestRun($test, $status, $message, $runTime): void
     {
         if (!$this->apiKey) {
             return;
