@@ -17,7 +17,7 @@ class Codeception extends \Codeception\Extension
         \Codeception\Events::RESULT_PRINT_AFTER => 'updateStatus'
     ];
 
-    private static string $runId;
+    private static $runId;
     private string $url;
     private string $apiKey;
     private bool $hasFailed = false;
